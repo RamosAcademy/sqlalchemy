@@ -1,5 +1,7 @@
 from models import (Base, session,
                     Book, engine)
+import datetime
+import csv
 
 
 def menu():
@@ -20,13 +22,28 @@ def menu():
             \rA number from 1 - 5.
             \rPress Enter to try again.''')
 
-# main menu - add, search, analysis, exit, view options
 # add books to the db
 # edit books
 # delete books
 # search function
 # data cleaning
-# loop runs program
+
+
+def clean_date(date_str):
+    months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+    split_date = date_str.split(' ')
+    month = int(months.index(split_date[0]) + 1)
+    day = int(split_date[1].split(',')[0])
+    year = int(split_date[2])
+    return datetime.date(year, month, day)
+
+
+def add_csv():
+    with open('suggested_books.csv') as csvfile:
+        data = csv.reader(csvfile)
+        for row in data:
+            print(row)
 
 
 def app():
@@ -55,4 +72,6 @@ def app():
 
 if __name__ == '__main__':
     Base.metadata.create_all(engine)
-    app()
+    # app()
+    # add_csv()
+    clean_date('October 25, 2017')
