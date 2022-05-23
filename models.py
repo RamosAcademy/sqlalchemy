@@ -1,21 +1,27 @@
-from sqlalchemy import (create_engine, Column, Integer, String, Date)
+from curses import echo
+from sqlalchemy import (create_engine, Column,
+                        Integer, String, Date)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///inventory.db', echo=False)
+engine = create_engine('sqlite:///books.db', echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
 
-class Product(Base):
-    __tablename__ = 'inventory'
+class Book(Base):
+    __tablename__ = 'books'
 
-    product_id = Column(Integer, primary_key=True)
-    product_name = Column('Name', String)
-    product_quantity = Column('Quantity', Integer)
-    product_price = Column('Price', Integer)
-    date_updated = Column('Date', Date)
+    id = Column(Integer, primary_key=True)
+    title = Column('Title', String)
+    author = Column('Author', String)
+    published_date = Column('Published', Date)
+    price = Column('Price', Integer)
 
     def __repr__(self) -> str:
-        return f'Product: {self.product_name}. Quantity: {self.product_quantity}, Price: {self.product_price / 100}, Updated On: {self.date_updated}'
+        return f'Title: {self.title}. Author: {self.author}, Published: {self.published_date}, Price: {self.price}'
+# create a db
+# books.db
+# create a model
+# title, author, date published, price
